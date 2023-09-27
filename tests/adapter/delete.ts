@@ -1,7 +1,7 @@
 import { expect } from "chai";
 
 import ImageKitAdapter from "../../src";
-import ImageKitAdapterError from "../../utils/errors";
+import ImageKitAdapterError from "../../src/utils/errors";
 import { mockImage, testConfig } from "../fixtures";
 
 const imagekitAdapter = new ImageKitAdapter(testConfig());

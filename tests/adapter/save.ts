@@ -4,7 +4,7 @@ import moment from "moment";
 import * as sinon from "sinon";
 import { image, testConfig, uploadResponse } from "../fixtures";
 
-import { readFileAsync } from "../../utils";
+import { readFileAsync } from "../../src/utils";
 
 import ImageKitAdapter from "../../src";
 

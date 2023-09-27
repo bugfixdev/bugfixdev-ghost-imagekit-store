@@ -9,7 +9,7 @@
                 "urlEndpoint": "https://ik.imagekit.io/your-imagekit-id"
             },
             "uploadOptions": {
-                "useUniqueFileName": false,
+                "useUniqueFileName": true,
                 "folder": "/sample",
                 "tags": ["blog"]
             }

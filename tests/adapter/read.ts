@@ -2,7 +2,7 @@ import { expect } from "chai";
 import nock from "nock";
 
 import ImageKitAdapter from "../../src";
-import ImageKitAdapterError from "../../utils/errors";
+import ImageKitAdapterError from "../../src/utils/errors";
 import { testConfig } from "../fixtures";
 
 const imagekitAdapter = new ImageKitAdapter(testConfig());

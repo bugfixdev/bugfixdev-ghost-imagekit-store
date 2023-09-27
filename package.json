@@ -1,12 +1,12 @@
 {
   "name": "ghost-imagekit-store",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "",
   "main": "dist/src/index.js",
   "scripts": {
     "postinstall": "install-types --yarn",
-    "test": "GHOST_CONTENT=content nyc mocha tests/index.ts",
-    "build": "rm -rf dist/ && ncc build ./src/index.ts -o dist/src/"
+    "test": "nyc mocha tests/index.ts",
+    "build": "tsc --build --clean && tsc"
   },
   "author": "",
   "license": "ISC",
@@ -25,14 +25,15 @@
     "@types/got": "^9.6.12",
     "@types/lodash.merge": "^4.6.7",
     "@types/mocha": "^10.0.1",
+    "@types/nconf": "^0.10.4",
     "@types/node-static": "^0.7.7",
     "@types/serve-static": "^1.15.1",
     "@types/sinon": "^10.0.13",
-    "@vercel/ncc": "^0.36.1",
     "chai": "^4.3.7",
     "install-types": "^2.0.1",
     "mocha": "^10.2.0",
     "moment": "^2.29.4",
+    "nconf": "^0.12.0",
     "nock": "^13.3.0",
     "nyc": "^15.1.0",
     "sinon": "^15.0.3",

@@ -1,14 +1,33 @@
 import StorageBase from "ghost-storage-base";
 import got from "got";
 import ImageKit from "imagekit";
-import { join } from "path";
+import path, { join } from "path";
 import serveStatic from "serve-static";
 
-import { readFileAsync, stripLeadingSlash } from "../utils";
-import ImageKitAdapterError from "../utils/errors";
+import { readFileAsync, stripLeadingSlash } from "./utils";
+import ImageKitAdapterError from "./utils/errors";
+import nconf from "nconf";
+
+const env = process.env.NODE_ENV || "development";
+
+const ghostConfigPath = process.cwd();
+const config = new nconf.Provider();
+
+config
+  .argv()
+  .env({
+    separator: "__",
+  })
+  .file({
+    file: path.join(ghostConfigPath, "config." + env + ".json"),
+  });
+
+config.set("env", env);
+
+console.debug("ghostConfigPath - ", ghostConfigPath);
 
 const fileServe = serveStatic(
-  join(process.env.GHOST_CONTENT as string, "images"),
+  join(config.get("paths:contentPath") as string, "images"),
   {
     fallthrough: true,
     maxAge: "1y",
@@ -74,7 +93,7 @@ class Store extends StorageBase {
   }
 
   async exists(fileName: string, targetDir?: string): Promise<boolean> {
-    console.log("exists", fileName, targetDir);
+    console.debug("exists", fileName, targetDir);
     try {
       const filePath = stripLeadingSlash(join(targetDir || "", fileName));
       const response = await got(new URL(filePath, this.urlEndpoint), {
@@ -89,13 +108,17 @@ class Store extends StorageBase {
   }
 
   async save(image: StorageBase.Image, targetDir?: string): Promise<string> {
-    console.log("save", image.name);
+    console.debug("save", image.name);
     try {
-      const folder =
-        targetDir ??
-        (this.enableDatedFolders
-          ? this.getTargetDir(this.uploadOptions.folder)
-          : this.uploadOptions.folder);
+      const tempPath = targetDir
+        ? targetDir
+        : this.enableDatedFolders
+        ? this.getTargetDir(this.uploadOptions.folder)
+        : this.uploadOptions.folder;
+
+      let folder = "/";
+      if (tempPath != undefined)
+        folder = tempPath.split(path.sep).join(path.posix.sep);
 
       const fileName = this.getSanitizedFileName(image.name);
 
@@ -110,7 +133,14 @@ class Store extends StorageBase {
       });
 
       const result = new URL(uploadResponse.url);
-      result.searchParams.append("updatedAt", new Date().getTime().toString());
+
+      if (!this.uploadOptions?.useUniqueFileName) {
+        result.searchParams.append(
+          "updatedAt",
+          new Date().getTime().toString()
+        );
+      }
+
       return result.toString();
     } catch (err) {
       throw new ImageKitAdapterError({
@@ -122,16 +152,16 @@ class Store extends StorageBase {
 
   serve() {
     return (req: any, res: any, next: any) => {
-      console.log("serve", req.url);
+      console.debug("serve", req.url);
       fileServe(req, res, () => {
-        console.log("file not found");
+        console.error("file not found");
         res.status(404).end();
       });
     };
   }
 
   async delete(fileName: string, targetDir?: string): Promise<boolean> {
-    console.log("delete", fileName, targetDir);
+    console.debug("delete", fileName, targetDir);
     throw new ImageKitAdapterError({
       statusCode: 400,
       message:
@@ -140,7 +170,7 @@ class Store extends StorageBase {
   }
 
   async read(options?: StorageBase.ReadOptions): Promise<Buffer> {
-    console.log("read", options);
+    console.debug("read", options);
     try {
       return await got(new URL(options?.path || "", this.urlEndpoint), {
         responseType: "buffer",

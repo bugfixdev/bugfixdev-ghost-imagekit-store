@@ -1,0 +1,42 @@
+{
+  "url": "http://localhost:3000/",
+  "server": {
+    "port": 3000,
+    "host": "127.0.0.1"
+  },
+  "database": {
+    "client": "sqlite3",
+    "connection": {
+      "filename": "/ghost/content/data/ghost-dev.db"
+    }
+  },
+  "mail": {
+    "transport": "Direct"
+  },
+  "logging": {
+    "transports": ["file", "stdout"]
+  },
+  "process": "local",
+  "paths": {
+    "contentPath": "/ghost/content"
+  },
+  "storage": {
+    "active": "imagekit",
+    "imagekit": {
+      "enableDatedFolders": true,
+      "auth": {
+        "privateKey": "your-private-key",
+        "publicKey": "your-public-key",
+        "urlEndpoint": "https://ik.imagekit.io/your-imagekit-id"
+      },
+      "uploadOptions": {
+        "useUniqueFileName": true,
+        "folder": "/stage/",
+        "tags": ["blog"]
+      }
+    }
+  },
+  "imageOptimization": {
+    "resize": false
+  }
+}
