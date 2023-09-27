@@ -20,8 +20,8 @@
 - Install the adapter:
 
 ```bash
-yarn add ghost-imagekit-store
-cp node_modules/ghost-imagekit-store/dist/src/index.js content/adapters/storage/imagekit/
+yarn add bugfixdev-ghost-imagekit-store
+cp node_modules/bugfixdev-ghost-imagekit-store/dist/src content/adapters/storage/imagekit/
 ```
 
 - Configure Ghost's config file.
@@ -33,11 +33,11 @@ Here's an example of using this adapter with a containerized Ghost:
 ```Dockerfile
 FROM ghost:5-alpine as imagekit
 RUN apk add g++ make python3
-RUN su-exec node yarn add ghost-imagekit-store
+RUN su-exec node yarn add bugfixdev-ghost-imagekit-store
 
 FROM ghost:5-alpine
 COPY --chown=node:node --from=imagekit $GHOST_INSTALL/node_modules $GHOST_INSTALL/node_modules
-COPY --chown=node:node --from=imagekit $GHOST_INSTALL/node_modules/ghost-imagekit-store/dist/src/index.js $GHOST_INSTALL/content/adapters/storage/imagekit/index.js
+COPY --chown=node:node --from=imagekit $GHOST_INSTALL/node_modules/bugfixdev-ghost-imagekit-store/dist/src/index.js $GHOST_INSTALL/content/adapters/storage/imagekit/index.js
 # Here, we use the Ghost CLI to set some pre-defined values.
 RUN set -ex; \
     su-exec node ghost config storage.active imagekit; \
@@ -52,8 +52,6 @@ Make sure the content path is correctly set in the Ghost configuration:
     "contentPath": "/var/lib/ghost/content/"
 }
 ```
-
-Ensure that the `GHOST_CONTENT` environment variable is set to the same value as that of `paths.contentPath` in your Ghost app.
 
 ## Configuration
 
@@ -71,7 +69,7 @@ Check out [configuration.json.dist](./configuration.json.dist) or below for a co
                 "urlEndpoint": "https://ik.imagekit.io/your-imagekit-id"
             },
             "uploadOptions": {
-                "useUniqueFileName": false,
+                "useUniqueFileName": true,
                 "folder": "/sample",
                 "tags": ["blog"]
             }
