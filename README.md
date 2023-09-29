@@ -1,3 +1,11 @@
+forked from offical https://github.com/imagekit-developer/ghost-imagekit-store.
+
+Fixed bug/issue.
+1. Converts windows and posix path to always posix path on image save. 
+2. No need to set GHOST_CONTENT env variable on ghost startup.
+3. No need of updatedAt in image url, if useUniqueFileName = true.
+4. Working 13 tests cases.
+
 # ImageKit Ghost Storage
 
 [ImageKit's](https://imagekit.io) [Ghost](https://github.com/TryGhost/Ghost) storage adapter.
@@ -55,7 +63,7 @@ Make sure the content path is correctly set in the Ghost configuration:
 
 ## Configuration
 
-Check out [configuration.json.dist](./configuration.json.dist) or below for a complete example.
+Check out [config.development.json](./config.development.json) or below for a complete example.
 
 ```json
 {
