@@ -1,6 +1,6 @@
 {
   "name": "bugfixdev-ghost-imagekit-store",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "ImageKit Ghost Storage adapter forked from offical https://github.com/imagekit-developer/ghost-imagekit-store",
   "main": "dist/src/index.js",
   "scripts": {
