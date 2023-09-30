@@ -1,10 +1,17 @@
+# [bugfix.dev](https://bugfix.dev) Changes.
+
 forked from offical https://github.com/imagekit-developer/ghost-imagekit-store.
 
-Fixed bug/issue.
+### Fixed bug/issue.
 1. Converts windows and posix path to always posix path on image save. 
 2. No need to set GHOST_CONTENT env variable on ghost startup.
 3. No need of updatedAt in image url, if useUniqueFileName = true.
 4. Working 13 tests cases.
+
+
+### To Use Image Transformation Dynamically use [img_url.js](https://gist.github.com/bugfixdev/4200793da373b61f06ddbf8d079216d4/raw/aa1a9e4fdecbe9aed50cca89e03ada998554c1a8/img_url.js) (frontend helper).
+
+
 
 # ImageKit Ghost Storage
 
