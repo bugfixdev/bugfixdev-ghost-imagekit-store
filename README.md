@@ -9,7 +9,7 @@ forked from offical https://github.com/imagekit-developer/ghost-imagekit-store.
 4. Working 13 tests cases.
 
 
-### To Use Image Transformation Dynamically use [img_url.js](https://gist.github.com/bugfixdev/4200793da373b61f06ddbf8d079216d4/raw/aa1a9e4fdecbe9aed50cca89e03ada998554c1a8/img_url.js) (frontend helper).
+### To Use Image Transformation Dynamically use [img_url.js](https://gist.github.com/bugfixdev/4200793da373b61f06ddbf8d079216d4/) (frontend helper).
 
 
 
